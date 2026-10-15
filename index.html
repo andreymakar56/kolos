@@ -9,222 +9,204 @@
 <meta property="og:image" content="images/probe-full.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #eeeef3;
-    --ink: #111114;
-    --muted: #5f5f6b;
-    --line: #d6d6df;
-    --tile: #e4e4eb;
-    --white: #ffffff;
-    --dark: #24242c;
-    --accent: #4f6df5;
-    --max: 1400px;
-    --gut: 48px;
+    --bg: #f7f7f5;
+    --card: #ffffff;
+    --ink: #141414;
+    --muted: #6b6b6b;
+    --line: #e6e6e2;
+    --red: #e11d3c;      /* the prototype's PLA red */
+    --red-dark: #b8122c;
+    --red-soft: #fde8ec;
+    --max: 1200px;
+    --gut: 32px;
+    --r: 16px;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    margin: 0; background: var(--bg); color: var(--ink); overflow-x: hidden;
-    font: 400 17px/1.55 Inter, system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased;
-  }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.6 Inter, system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
   img { display: block; max-width: 100%; height: auto; }
   a { color: inherit; }
-  h1, h2, h3 { font-weight: 500; margin: 0; letter-spacing: -0.035em; line-height: 1; }
+  h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -0.03em; line-height: 1.08; }
   p { margin: 0; }
-  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gut); position: relative; }
-  .meta { font-size: 14px; text-transform: uppercase; letter-spacing: .02em; color: var(--ink); line-height: 1.6; }
-  .meta.muted { color: var(--muted); }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gut); }
+  .muted { color: var(--muted); }
 
-  /* decorative arcs, as in the reference */
-  .arcs { position: absolute; top: 0; left: 0; right: 0; height: 900px; overflow: hidden; pointer-events: none; }
-  .arc { position: absolute; border: 26px solid var(--accent); border-radius: 50%; pointer-events: none; z-index: 0; }
-  .arc.a1 { width: 460px; height: 460px; top: -330px; left: 4%; }
-  .arc.a2 { width: 900px; height: 900px; top: -160px; right: -820px; }
+  /* nav */
+  nav { position: sticky; top: 0; z-index: 10; background: rgba(247,247,245,.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  nav .wrap { height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; letter-spacing: .06em; text-decoration: none; }
+  .brand i { width: 12px; height: 12px; border-radius: 3px; background: var(--red); }
+  nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-size: 15px; }
+  nav ul a { text-decoration: none; color: var(--muted); }
+  nav ul a:hover { color: var(--ink); }
+  .btn { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; border-radius: 10px; font-size: 15px; font-weight: 500; text-decoration: none; transition: background .15s; white-space: nowrap; }
+  .btn.red { background: var(--red); color: #fff; }
+  .btn.red:hover { background: var(--red-dark); }
+  .btn.line { border: 1px solid var(--line); background: var(--card); }
+  .btn.line:hover { border-color: #cfcfca; }
 
-  /* header */
-  header { position: relative; z-index: 2; padding-top: 40px; }
-  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .brand { font-size: 34px; font-weight: 500; letter-spacing: .02em; text-decoration: none; }
-  .pills { display: flex; gap: 12px; }
-  .pill {
-    display: inline-flex; align-items: center; gap: 12px; height: 56px; padding: 0 28px; border-radius: 999px;
-    font-size: 15px; letter-spacing: .04em; text-transform: uppercase; text-decoration: none; transition: transform .15s, background .15s;
-  }
-  .pill.dark { background: var(--dark); color: #fff; }
-  .pill.dark:hover { background: #000; }
-  .pill.light { background: var(--tile); color: var(--ink); }
-  .pill.light:hover { background: #dadae3; }
-  .pill:hover { transform: translateY(-1px); }
-  .pill .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-  .hero-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; margin-top: 28px; }
-  .hero-row h1 { font-size: clamp(56px, 10.5vw, 156px); letter-spacing: -0.05em; line-height: .95; }
-  .hero-row .meta { max-width: 360px; padding-bottom: 14px; }
+  /* hero */
+  .hero { padding: 72px 0 0; }
+  .hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
+  .label { display: inline-block; font-size: 14px; font-weight: 600; color: var(--red); margin-bottom: 18px; }
+  .hero h1 { font-size: clamp(42px, 6vw, 76px); letter-spacing: -0.04em; }
+  .hero .sub { font-size: 20px; color: var(--muted); margin-top: 24px; max-width: 560px; }
+  .by { margin-top: 28px; font-size: 15px; color: var(--muted); }
+  .by b { color: var(--ink); font-weight: 600; }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 40px; }
+  .kpi { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+  .kpi b { display: block; font-size: 26px; font-weight: 600; letter-spacing: -0.03em; }
+  .kpi span { font-size: 13.5px; color: var(--muted); }
+  .hero .photo { border-radius: var(--r); overflow: hidden; }
+  .hero .photo img { aspect-ratio: 3 / 4; object-fit: cover; width: 100%; }
 
   /* sections */
-  section { position: relative; z-index: 1; padding: 120px 0 0; }
-  .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; margin-bottom: 48px; }
-  .head h2 { font-size: clamp(40px, 6vw, 84px); letter-spacing: -0.045em; }
-  .head .meta { max-width: 380px; text-align: right; }
-  .num { color: var(--accent); }
-
-  /* cards */
-  .grid { display: grid; gap: 40px; }
-  .g2 { grid-template-columns: repeat(2, 1fr); }
+  section { padding: 120px 0 0; }
+  .head { margin-bottom: 40px; max-width: 760px; }
+  .head h2 { font-size: clamp(32px, 4vw, 48px); }
+  .head p { margin-top: 14px; font-size: 18px; color: var(--muted); }
+  .grid { display: grid; gap: 24px; }
+  .g2 { grid-template-columns: 1fr 1fr; }
   .g3 { grid-template-columns: repeat(3, 1fr); }
-  .g4 { grid-template-columns: repeat(4, 1fr); gap: 24px; }
-  .card .shot { border-radius: 24px; overflow: hidden; background: var(--tile); }
-  .card .shot img { width: 100%; }
-  .card .shot.portrait img { aspect-ratio: 3 / 4; object-fit: cover; }
-  .card .meta { margin-top: 18px; }
-  .card h3 { font-size: clamp(28px, 3vw, 44px); margin-top: 10px; }
-  .g4 .card h3 { font-size: 24px; letter-spacing: -0.02em; }
-  .g4 .card .meta { font-size: 13px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; margin: 0; }
+  .card.pad { padding: 32px; }
+  .card h3 { font-size: 22px; letter-spacing: -0.02em; margin-bottom: 18px; }
+  figure.card figcaption { padding: 14px 18px 16px; font-size: 14.5px; color: var(--muted); }
+  figure.card figcaption b { color: var(--ink); font-weight: 600; }
+  .ph img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
 
-  /* facts */
-  .facts { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
-  .fact { padding: 28px 24px 0 0; }
-  .fact b { display: block; font-size: clamp(40px, 4.6vw, 68px); font-weight: 500; letter-spacing: -0.045em; line-height: 1; }
-  .fact .meta { margin-top: 14px; color: var(--muted); font-size: 13px; }
-  .lede { font-size: clamp(22px, 2.3vw, 30px); line-height: 1.3; letter-spacing: -0.02em; max-width: 980px; margin-bottom: 64px; }
-  .lede span { color: var(--muted); }
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .fact { border-top: 2px solid var(--ink); padding-top: 18px; }
+  .fact b { display: block; font-size: clamp(32px, 3.6vw, 46px); font-weight: 600; letter-spacing: -0.04em; line-height: 1.05; }
+  .fact p { margin-top: 10px; font-size: 14.5px; color: var(--muted); }
+  .fact small { display: block; margin-top: 6px; font-size: 12.5px; color: #9a9a95; }
 
-  /* panels */
-  .panel { background: var(--white); border-radius: 24px; padding: 36px; }
-  .panel h3 { font-size: 26px; letter-spacing: -0.02em; margin-bottom: 20px; }
-  .rows { list-style: none; padding: 0; margin: 0; }
-  .rows li { display: flex; justify-content: space-between; gap: 20px; padding: 14px 0; border-top: 1px solid var(--line); font-size: 16px; }
+  .rows { list-style: none; margin: 0; padding: 0; }
+  .rows li { display: flex; justify-content: space-between; gap: 20px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 15.5px; }
   .rows li span:first-child { color: var(--muted); }
-  .rows li span:last-child { text-align: right; }
+  .rows li span:last-child { text-align: right; font-weight: 500; }
 
-  .bars { display: grid; gap: 26px; margin-top: 8px; }
-  .bar-top { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 10px; }
+  .bars { display: grid; gap: 24px; }
+  .bar-top { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 8px; }
   .bar-top span:last-child { color: var(--muted); font-variant-numeric: tabular-nums; }
-  .bar { height: 12px; border-radius: 999px; background: var(--tile); overflow: hidden; }
-  .bar i { display: block; height: 100%; border-radius: 999px; }
-  .small { font-size: 14px; color: var(--muted); margin-top: 24px; }
+  .bar { height: 12px; border-radius: 6px; background: #efefec; overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 6px; }
+  .note { margin-top: 22px; font-size: 14.5px; color: var(--muted); }
 
-  /* ml */
-  .big { font-size: clamp(88px, 13vw, 190px); font-weight: 500; letter-spacing: -0.06em; line-height: .9; }
-  .big small { font-size: .4em; letter-spacing: -0.03em; }
-  .cm { display: grid; grid-template-columns: 96px repeat(4, 1fr); gap: 6px; font-size: 14px; }
-  .cm div { padding: 14px 4px; text-align: center; border-radius: 10px; font-variant-numeric: tabular-nums; }
-  .cm .h { color: var(--muted); font-size: 12px; text-transform: uppercase; padding: 0 0 6px; }
-  .cm .r { text-align: left; color: var(--muted); font-size: 12px; text-transform: uppercase; display: flex; align-items: center; padding-left: 0; }
-  .list { list-style: none; padding: 0; margin: 28px 0 0; border-top: 1px solid var(--line); }
-  .list li { padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
+  .big { font-size: clamp(72px, 10vw, 128px); font-weight: 600; letter-spacing: -0.06em; line-height: .95; color: var(--red); }
+  .big small { font-size: .45em; }
+  .list { list-style: none; margin: 24px 0 0; padding: 0; }
+  .list li { padding: 12px 0; border-top: 1px solid var(--line); font-size: 15.5px; }
+  .list li b { font-weight: 600; }
   .list li span { color: var(--muted); }
+  .cm { display: grid; grid-template-columns: 84px repeat(4, 1fr); gap: 6px; font-size: 14px; }
+  .cm div { padding: 13px 4px; text-align: center; border-radius: 8px; font-variant-numeric: tabular-nums; font-weight: 500; }
+  .cm .h { color: var(--muted); font-size: 12.5px; padding: 0 0 4px; font-weight: 400; }
+  .cm .r { text-align: left; color: var(--muted); font-size: 12.5px; display: flex; align-items: center; padding-left: 0; font-weight: 400; }
 
-  /* paper */
-  .paper { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
-  .viewer { border-radius: 24px; overflow: hidden; background: var(--white); min-height: 760px; }
-  .viewer iframe { width: 100%; height: 100%; min-height: 760px; border: 0; display: block; }
+  .pilot { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .pilot .card b { display: block; font-size: 40px; font-weight: 600; letter-spacing: -0.04em; color: var(--red); line-height: 1.1; margin-bottom: 8px; }
+
+  .render { background: #f8f8f8; border: 1px solid var(--line); border-radius: var(--r); display: flex; justify-content: center; padding: 16px; }
+  .render img { max-height: 600px; width: auto; }
+
+  .paper { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; }
+  .viewer { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; height: 780px; }
+  .viewer iframe { width: 100%; height: 100%; border: 0; display: block; }
   .viewer .cover { display: none; }
-  .paper-info { display: flex; flex-direction: column; justify-content: space-between; gap: 40px; }
-  .paper-info h3 { font-size: clamp(30px, 3.2vw, 46px); letter-spacing: -0.035em; line-height: 1.08; }
-  .paper-info .ru { margin-top: 18px; color: var(--muted); font-size: 15px; }
-  .award { background: var(--dark); color: #fff; border-radius: 24px; padding: 32px; }
-  .award .meta { color: #a9b6ff; }
-  .award p { font-size: 22px; letter-spacing: -0.02em; line-height: 1.3; margin-top: 12px; }
+  .paper-side { display: grid; gap: 24px; align-content: start; }
+  .paper-side h3 { font-size: 26px; line-height: 1.2; margin-bottom: 10px; }
+  .ru { font-size: 14.5px; color: var(--muted); margin-bottom: 22px; }
+  .award { background: var(--ink); color: #fff; border-radius: var(--r); padding: 28px 32px; }
+  .award .label { margin-bottom: 10px; color: #ff6b82; }
+  .award p { font-size: 19px; line-height: 1.4; }
   .btns { display: flex; flex-wrap: wrap; gap: 12px; }
 
-  /* code links */
-  .links { border-top: 1px solid var(--ink); }
-  .links a {
-    display: grid; grid-template-columns: 1fr 1.4fr auto; gap: 24px; align-items: baseline; padding: 26px 0;
-    border-bottom: 1px solid var(--line); text-decoration: none; transition: padding .2s;
-  }
-  .links a:hover { padding-left: 12px; }
-  .links b { font-size: clamp(22px, 2.4vw, 34px); font-weight: 500; letter-spacing: -0.03em; }
-  .links span { color: var(--muted); font-size: 15px; }
-  .links em { font-style: normal; font-size: 14px; text-transform: uppercase; }
+  .code a { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 20px 0; border-top: 1px solid var(--line); text-decoration: none; }
+  .code a:last-child { border-bottom: 1px solid var(--line); }
+  .code a b { font-weight: 600; font-size: 18px; min-width: 200px; }
+  .code a span { color: var(--muted); font-size: 15px; flex: 1; }
+  .code a em { font-style: normal; color: var(--red); font-size: 14px; font-weight: 500; }
+  .code a:hover b { color: var(--red); }
 
-  footer { padding: 120px 0 56px; }
-  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  footer { padding: 96px 0 48px; font-size: 14px; color: var(--muted); }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 
-  @media (max-width: 1000px) {
-    :root { --gut: 28px; }
+  @media (max-width: 960px) {
+    nav ul { display: none; }
+    .hero .wrap, .paper { grid-template-columns: 1fr; }
     .g3 { grid-template-columns: 1fr 1fr; }
-    .g4 { grid-template-columns: 1fr 1fr; }
-    .facts { grid-template-columns: 1fr 1fr; row-gap: 32px; }
-    .paper { grid-template-columns: 1fr; }
-    .hero-row, .head { flex-direction: column; align-items: flex-start; gap: 20px; }
-    .head .meta { text-align: left; }
+    .facts { grid-template-columns: 1fr 1fr; row-gap: 36px; }
   }
-  @media (max-width: 700px) {
+  @media (max-width: 640px) {
     :root { --gut: 16px; }
     body { font-size: 16px; }
     section { padding-top: 88px; }
-    .g2, .g3 { grid-template-columns: 1fr; gap: 48px; }
-    .g4 { gap: 16px; }
-    .pill { height: 46px; padding: 0 18px; font-size: 13px; }
-    .pill.light { display: none; }
-    .brand { font-size: 26px; }
-    .arc.a1 { width: 260px; height: 260px; top: -200px; border-width: 18px; }
-    .arc.a2 { display: none; }
-    .panel { padding: 24px; }
-    .cm { grid-template-columns: 70px repeat(4, 1fr); font-size: 13px; }
-    .cm .h, .cm .r { font-size: 10px; }
-    .viewer { min-height: 0; }
+    .hero { padding-top: 40px; }
+    .g2, .pilot { grid-template-columns: 1fr; }
+    .g3 { gap: 12px; }
+    .kpis { grid-template-columns: 1fr 1fr; }
+    .kpi:last-child { grid-column: span 2; }
+    .card.pad { padding: 22px; }
+    .cm { grid-template-columns: 64px repeat(4, 1fr); font-size: 13px; }
+    .cm .h, .cm .r { font-size: 10.5px; }
+    .viewer { height: auto; }
     .viewer iframe { display: none; }
     .viewer .cover { display: block; }
-    .links a { grid-template-columns: 1fr; gap: 6px; }
+    .code a { flex-direction: column; gap: 4px; }
+    .btn.hide-sm { display: none; }
   }
 </style>
 </head>
 <body>
 
-<div class="arcs" aria-hidden="true"><div class="wrap"><div class="arc a1"></div><div class="arc a2"></div></div></div>
-
-<header id="top">
+<nav>
   <div class="wrap">
-    <div class="top">
-      <a class="brand" href="#top">KOLOS</a>
-      <div class="pills">
-        <a class="pill light" href="https://github.com/andreymakar56/kolos" target="_blank" rel="noopener">GitHub <span class="dot"></span></a>
-        <a class="pill dark" href="#paper">Research paper <span class="dot"></span></a>
+    <a class="brand" href="#top"><i></i>KOLOS</a>
+    <ul>
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#build">Build</a></li>
+      <li><a href="#ml">Machine learning</a></li>
+      <li><a href="#pilot">Pilot</a></li>
+      <li><a href="#paper">Paper</a></li>
+      <li><a href="#code">Code</a></li>
+    </ul>
+    <a class="btn red" href="#paper">Research paper</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <span class="label">Acoustic grain-pest probe</span>
+      <h1>Listening for pests inside stored grain</h1>
+      <p class="sub">A 3D-printed probe with a microphone, an ESP32 and a machine-learning classifier that detects activity inside a grain pile.</p>
+      <p class="by">By <b>Andrey Makarovsky</b> · Letovo School, Moscow · built for grain warehouses in Orenburg</p>
+      <div class="kpis">
+        <div class="kpi"><b>93.4%</b><span>classifier accuracy</span></div>
+        <div class="kpi"><b>≤1,200 ₽</b><span>parts cost</span></div>
+        <div class="kpi"><b>Laureate</b><span>All-Russian Timiryazev Contest</span></div>
       </div>
     </div>
-    <div class="hero-row">
-      <h1>Listening to<br>stored grain</h1>
-      <p class="meta">Acoustic probe that detects insect activity inside a grain pile. 3D printing, ESP32, machine learning. Built for grain warehouses in Orenburg.</p>
-    </div>
+    <div class="photo"><img src="images/probe-full.jpg" alt="The full KOLOS prototype: 1 m aluminium tube with a red 3D-printed sensor chamber and electronics box" width="960" height="1280"></div>
   </div>
 </header>
-
-<section style="padding-top:72px">
-  <div class="wrap grid g3">
-    <article class="card">
-      <div class="shot portrait"><img src="images/probe-full.jpg" alt="The full KOLOS prototype: 1 m aluminium tube with a red 3D-printed sensor chamber and electronics box" width="960" height="1280"></div>
-      <p class="meta">1 m aluminium tube · PLA parts · USB</p>
-      <h3>Working prototype</h3>
-    </article>
-    <article class="card">
-      <div class="shot portrait"><img src="images/chamber-closed.jpg" alt="Closed perforated sensor chamber with nose cone" width="960" height="1280"></div>
-      <p class="meta">Perforated chamber · nose cone</p>
-      <h3>Sensor head</h3>
-    </article>
-    <article class="card">
-      <div class="shot portrait"><img src="images/esp32-box.jpg" alt="ESP32 board inside the 3D-printed electronics box" width="960" height="1280" loading="lazy"></div>
-      <p class="meta">ESP32 · 12-bit ADC · serial output</p>
-      <h3>Electronics</h3>
-    </article>
-  </div>
-</section>
 
 <section id="problem">
   <div class="wrap">
     <div class="head">
-      <h2><span class="num">01</span> Problem</h2>
-      <p class="meta muted">Why I built it</p>
+      <span class="label">01 · Problem</span>
+      <h2>Infestations are found too late</h2>
+      <p>Orenburg is my hometown and one of Russia's main grain regions. Most warehouses there check grain by hand sampling, and imported monitoring systems have become harder and more expensive to get.</p>
     </div>
-    <p class="lede">Orenburg is my hometown and one of Russia's main grain regions. <span>Most warehouses there check grain by hand sampling, and imported monitoring systems have become harder and more expensive to get. I wanted a probe a small farm can afford and install by hand.</span></p>
     <div class="facts">
-      <div class="fact"><b>5.7–7.8%</b><p class="meta">of stored grain eaten by insects within 6 months · VNIIZ</p></div>
-      <div class="fact"><b>7 Mt</b><p class="meta">grain lost to storage pests in Russia per year, upper estimate · Rosselkhoznadzor</p></div>
-      <div class="fact"><b>4.15 Mt</b><p class="meta">grain threshed in Orenburg region by 15 Sep 2026 · 2nd in Volga district</p></div>
-      <div class="fact"><b>≈45%</b><p class="meta">of Orenburg storage capacity is outside elevators · regional ministry</p></div>
+      <div class="fact"><b>5.7–7.8%</b><p>of stored grain eaten by insects within 6 months</p><small>VNIIZ</small></div>
+      <div class="fact"><b>up to 7 Mt</b><p>of grain lost to storage pests in Russia per year</p><small>Rosselkhoznadzor</small></div>
+      <div class="fact"><b>4.15 Mt</b><p>threshed in Orenburg region by 15 Sep 2026, 2nd in the Volga district</p><small>Orenburg region government</small></div>
+      <div class="fact"><b>≈45%</b><p>of Orenburg storage capacity is outside elevators</p><small>Orenburg Ministry of Agriculture</small></div>
     </div>
   </div>
 </section>
@@ -232,46 +214,37 @@
 <section id="build">
   <div class="wrap">
     <div class="head">
-      <h2><span class="num">02</span> Build</h2>
-      <p class="meta muted">July–August 2026 · Fusion 360 → OrcaSlicer → Creality K1C</p>
+      <span class="label">02 · Build</span>
+      <h2>The prototype</h2>
+      <p>July–August 2026. Modelled in Fusion 360, sliced in OrcaSlicer, printed on a Creality K1C.</p>
     </div>
-    <div class="grid g4">
-      <article class="card">
-        <div class="shot portrait"><img src="images/printed-chamber.jpg" alt="Printed half of the perforated chamber" width="960" height="1280" loading="lazy"></div>
-        <p class="meta">Step 1</p><h3>Printed chamber</h3>
-      </article>
-      <article class="card">
-        <div class="shot portrait"><img src="images/microphone.jpg" alt="MAX9814 microphone mounted inside the chamber" width="960" height="1280" loading="lazy"></div>
-        <p class="meta">Step 2</p><h3>MAX9814 microphone</h3>
-      </article>
-      <article class="card">
-        <div class="shot portrait"><img src="images/chamber-open.jpg" alt="Open sensor chamber with the microphone and wiring to the tube" width="960" height="1280" loading="lazy"></div>
-        <p class="meta">Step 3</p><h3>Wired through the tube</h3>
-      </article>
-      <article class="card">
-        <div class="shot portrait"><img src="images/probe-desk.jpg" alt="Assembled probe held up at the desk" width="960" height="1280" loading="lazy"></div>
-        <p class="meta">Step 4</p><h3>Assembled</h3>
-      </article>
+    <div class="grid g3">
+      <figure class="card ph"><img src="images/printed-chamber.jpg" alt="Printed half of the perforated chamber" width="960" height="1280" loading="lazy"><figcaption><b>Printed chamber.</b> Perforated PLA shell.</figcaption></figure>
+      <figure class="card ph"><img src="images/microphone.jpg" alt="MAX9814 microphone mounted inside the chamber" width="960" height="1280" loading="lazy"><figcaption><b>Microphone.</b> MAX9814 with auto gain.</figcaption></figure>
+      <figure class="card ph"><img src="images/chamber-open.jpg" alt="Open sensor chamber with wiring into the tube" width="960" height="1280" loading="lazy"><figcaption><b>Wiring.</b> Runs up through the 1 m tube.</figcaption></figure>
+      <figure class="card ph"><img src="images/chamber-closed.jpg" alt="Closed sensor chamber with nose cone" width="960" height="1280" loading="lazy"><figcaption><b>Sensor head.</b> Closed chamber and nose cone.</figcaption></figure>
+      <figure class="card ph"><img src="images/esp32-box.jpg" alt="ESP32 board inside the printed electronics box" width="960" height="1280" loading="lazy"><figcaption><b>Electronics.</b> ESP32 in the printed box.</figcaption></figure>
+      <figure class="card ph"><img src="images/probe-desk.jpg" alt="Assembled probe held at the desk" width="960" height="1280" loading="lazy"><figcaption><b>Assembled.</b> Ready for measurements.</figcaption></figure>
     </div>
-    <div class="grid g2" style="margin-top:40px">
-      <div class="panel">
+    <div class="grid g2" style="margin-top:24px">
+      <div class="card pad">
         <h3>Components</h3>
         <ul class="rows">
           <li><span>Body</span><span>1 m aluminium tube</span></li>
-          <li><span>Printed parts</span><span>Chamber, nose cone, electronics box · PLA</span></li>
-          <li><span>Sensor</span><span>MAX9814 microphone, auto gain</span></li>
+          <li><span>Printed parts</span><span>Chamber, nose cone, box · PLA</span></li>
+          <li><span>Sensor</span><span>MAX9814 microphone</span></li>
           <li><span>Controller</span><span>ESP32, GPIO34, 12-bit ADC</span></li>
           <li><span>Power / data</span><span>USB</span></li>
-          <li><span>Parts cost</span><span>1,000–1,200 RUB</span></li>
+          <li><span>Parts cost</span><span>1,000–1,200 ₽</span></li>
         </ul>
       </div>
-      <div class="panel">
+      <div class="card pad">
         <h3>Firmware</h3>
         <ul class="rows">
-          <li><span>Window</span><span>0.25 s, amplitude + RMS</span></li>
+          <li><span>Window</span><span>0.25 s · amplitude + RMS</span></li>
           <li><span>Calibration</span><span>10 s of background → RMS₀</span></li>
           <li><span>Event</span><span>RMS &gt; 1.25 × RMS₀</span></li>
-          <li><span>Buffer</span><span>Last 20 windows</span></li>
+          <li><span>Buffer</span><span>last 20 windows</span></li>
           <li><span>Status</span><span>0–2 Normal · 3–7 Attention · 8+ Alert</span></li>
         </ul>
       </div>
@@ -282,22 +255,19 @@
 <section id="signal">
   <div class="wrap">
     <div class="head">
-      <h2><span class="num">03</span> Signal</h2>
-      <p class="meta muted">First measurements · ADC units</p>
+      <span class="label">03 · Signal</span>
+      <h2>First measurements</h2>
     </div>
-    <div class="grid g2">
-      <div class="panel">
-        <h3>Amplitude</h3>
+    <div class="grid g2" style="align-items:start">
+      <div class="card pad">
+        <h3>Amplitude, ADC units</h3>
         <div class="bars">
-          <div><div class="bar-top"><span>Quiet background</span><span>300–500</span></div><div class="bar"><i style="width:24%;background:#9aa0b4"></i></div></div>
-          <div><div class="bar-top"><span>Light knocks on the probe</span><span>1,500–2,000</span></div><div class="bar"><i style="width:100%;background:var(--accent)"></i></div></div>
+          <div><div class="bar-top"><span>Quiet background</span><span>300–500</span></div><div class="bar"><i style="width:24%;background:#b5b5b0"></i></div></div>
+          <div><div class="bar-top"><span>Light knocks on the probe</span><span>1,500–2,000</span></div><div class="bar"><i style="width:100%;background:var(--red)"></i></div></div>
         </div>
-        <p class="small">Light knocks are 3–7× above background. Tests with live insects in grain are the next stage.</p>
+        <p class="note">Light knocks are 3–7× above background. Tests with live insects in grain are next.</p>
       </div>
-      <article class="card">
-        <div class="shot"><img src="images/serial-log.jpg" alt="Serial monitor: calibration, amplitude, RMS, activity, events and status" width="1280" height="544" loading="lazy"></div>
-        <p class="meta">Serial output · calibration → AMP, RMS, ACTIVITY, EVENTS, STATUS</p>
-      </article>
+      <figure class="card"><img src="images/serial-log.jpg" alt="Serial monitor: calibration, amplitude, RMS, activity, events and status" width="1280" height="544" loading="lazy"><figcaption>Serial output: calibration, then amplitude, RMS, activity, events and status.</figcaption></figure>
     </div>
   </div>
 </section>
@@ -305,44 +275,42 @@
 <section id="ml">
   <div class="wrap">
     <div class="head">
-      <h2><span class="num">04</span> Machine learning</h2>
-      <p class="meta muted">Random Forest · scikit-learn · my own recordings</p>
+      <span class="label">04 · Machine learning</span>
+      <h2>Insect-like signal or noise?</h2>
+      <p>Random Forest (scikit-learn), trained on my own recordings from the prototype.</p>
     </div>
     <div class="grid g2">
-      <div>
+      <div class="card pad">
         <div class="big">93.4<small>%</small></div>
-        <p class="meta muted" style="margin-top:16px">Accuracy on held-out data · 267 / 286 windows</p>
+        <p class="muted" style="margin-top:10px">accuracy on held-out data, 267 of 286 windows</p>
         <ul class="list">
-          <li>4 classes <span>· silence, single knocks, repeated impulses, airborne noise</span></li>
-          <li>Insect stand-in <span>· metronome (repeated impulses), 106 / 106 correct</span></li>
-          <li>12 features <span>· level, spread, peaks, autocorrelation</span></li>
-          <li>Window <span>· 20 amplitudes, step 5</span></li>
-          <li>Split <span>· first 70% of each recording to train, last 30% to test</span></li>
+          <li><b>4 classes</b> <span>· silence, single knocks, repeated impulses, airborne noise</span></li>
+          <li><b>Insect stand-in</b> <span>· metronome impulses, 106 / 106 correct</span></li>
+          <li><b>12 features</b> <span>· level, spread, peaks, autocorrelation</span></li>
+          <li><b>Window</b> <span>· 20 amplitudes, step 5</span></li>
+          <li><b>Split</b> <span>· first 70% of each recording to train, last 30% to test</span></li>
         </ul>
       </div>
-      <div class="panel">
+      <div class="card pad">
         <h3>Confusion matrix</h3>
-        <p class="meta muted" style="font-size:12px;margin:-8px 0 20px">Rows: true · Columns: predicted</p>
+        <p class="muted" style="font-size:14px;margin:-10px 0 18px">Rows: true class · columns: predicted</p>
         <div class="cm" id="cm"></div>
       </div>
     </div>
-    <article class="card" style="margin-top:40px">
-      <div class="shot"><img src="images/live-recognition.jpg" alt="Classifier running live on the probe's serial stream" width="1280" height="643" loading="lazy"></div>
-      <p class="meta">Live recognition from the probe · «тишина» = silence, «шум в воздухе» = airborne noise</p>
-    </article>
+    <figure class="card" style="margin-top:24px"><img src="images/live-recognition.jpg" alt="Classifier running live on the probe's serial stream" width="1280" height="643" loading="lazy"><figcaption>Live recognition from the probe. «тишина» = silence, «шум в воздухе» = airborne noise.</figcaption></figure>
   </div>
 </section>
 
 <section id="pilot">
   <div class="wrap">
     <div class="head">
-      <h2><span class="num">05</span> Pilot</h2>
-      <p class="meta muted">Orenburg region</p>
+      <span class="label">05 · Pilot</span>
+      <h2>Orenburg warehouses</h2>
     </div>
-    <div class="facts" style="grid-template-columns:repeat(3,1fr)">
-      <div class="fact"><b>2</b><p class="meta">grain warehouses piloted</p></div>
-      <div class="fact"><b>Positive</b><p class="meta">feedback from both managers</p></div>
-      <div class="fact"><b>~3,000 t</b><p class="meta">floor warehouse where I interviewed the manager</p></div>
+    <div class="pilot">
+      <div class="card pad"><b>2</b><p class="muted">grain warehouses in the Orenburg region where I piloted the prototype</p></div>
+      <div class="card pad"><b>Positive</b><p class="muted">feedback from the managers of both warehouses</p></div>
+      <div class="card pad"><b>≈3,000 t</b><p class="muted">floor warehouse where I interviewed the manager about how grain is checked</p></div>
     </div>
   </div>
 </section>
@@ -350,41 +318,33 @@
 <section id="dashboard">
   <div class="wrap">
     <div class="head">
-      <h2><span class="num">06</span> Dashboard</h2>
-      <p class="meta muted">Next.js · test data · Russian UI</p>
+      <span class="label">06 · Dashboard</span>
+      <h2>Web dashboard</h2>
+      <p>Next.js, test data, Russian interface.</p>
     </div>
-    <div class="grid g2">
-      <article class="card">
-        <div class="shot"><img src="images/dashboard-overview.jpg" alt="Dashboard: all storage units with probe status" width="1600" height="698" loading="lazy"></div>
-        <p class="meta">All storage units · status per probe</p>
-        <h3>Overview</h3>
-      </article>
-      <article class="card">
-        <div class="shot"><img src="images/dashboard-silo.jpg" alt="Dashboard: one storage unit with probe depths and readings" width="1600" height="903" loading="lazy"></div>
-        <p class="meta">Probe depths · readings · alerts</p>
-        <h3>Storage unit</h3>
-      </article>
+    <div class="grid g2" style="align-items:start">
+      <figure class="card"><img src="images/dashboard-overview.jpg" alt="Dashboard: all storage units with probe status" width="1600" height="698" loading="lazy"><figcaption><b>Overview.</b> Every storage unit and its status.</figcaption></figure>
+      <figure class="card"><img src="images/dashboard-silo.jpg" alt="Dashboard: one storage unit with probe depths and readings" width="1600" height="903" loading="lazy"><figcaption><b>Storage unit.</b> Probe depths, readings, alerts.</figcaption></figure>
     </div>
-    <div class="btns" style="margin-top:40px">
-      <a class="pill dark" href="https://andreymakar56.github.io/grain-infestation-dashboard/" target="_blank" rel="noopener">Open live demo <span class="dot"></span></a>
-    </div>
+    <div class="btns" style="margin-top:24px"><a class="btn line" href="https://andreymakar56.github.io/grain-infestation-dashboard/" target="_blank" rel="noopener">Open live demo ↗</a></div>
   </div>
 </section>
 
 <section id="next">
   <div class="wrap">
     <div class="head">
-      <h2><span class="num">07</span> Next: industrial probe</h2>
-      <p class="meta muted">Designed · not built yet</p>
+      <span class="label">07 · Next</span>
+      <h2>Industrial probe</h2>
+      <p>Designed, not built yet.</p>
     </div>
     <div class="grid g2" style="align-items:center">
-      <div class="shot" style="border-radius:24px;overflow:hidden;background:#f8f8f8"><img src="images/probe-3d.png" alt="3D render of the industrial KOLOS probe" width="900" height="1400" loading="lazy" style="width:auto;max-height:640px;margin:0 auto"></div>
+      <div class="render"><img src="images/probe-3d.png" alt="3D render of the industrial KOLOS probe" width="900" height="1400" loading="lazy"></div>
       <ul class="list" style="margin:0">
-        <li>Piezo sensor <span>· on a stainless-steel rod, for vibration through the grain</span></li>
-        <li>Bait chamber <span>· perforated, draws insects to the sensor</span></li>
-        <li>SHT31 <span>· temperature and humidity</span></li>
-        <li>Battery + radio <span>· gateway → server → dashboard</span></li>
-        <li>Then <span>· tests with live insects, installation in Orenburg warehouses</span></li>
+        <li><b>Piezo sensor</b> <span>· on a stainless-steel rod, picks up vibration through the grain</span></li>
+        <li><b>Bait chamber</b> <span>· perforated, draws insects to the sensor</span></li>
+        <li><b>SHT31</b> <span>· temperature and humidity</span></li>
+        <li><b>Battery + radio</b> <span>· gateway → server → dashboard</span></li>
+        <li><b>Then</b> <span>· tests with live insects, installation in Orenburg warehouses</span></li>
       </ul>
     </div>
   </div>
@@ -393,31 +353,32 @@
 <section id="paper">
   <div class="wrap">
     <div class="head">
-      <h2><span class="num">08</span> Research paper</h2>
-      <p class="meta muted">31 pages · Russian</p>
+      <span class="label">08 · Research paper</span>
+      <h2>Read the paper</h2>
+      <p>31 pages, in Russian.</p>
     </div>
     <div class="paper">
       <div class="viewer">
-        <iframe src="docs/KOLOS_research_paper_RU.pdf#view=FitH" title="KOLOS research paper (PDF)" loading="lazy"></iframe>
+        <iframe src="docs/KOLOS_research_paper_RU.pdf#navpanes=0&view=FitH" title="KOLOS research paper (PDF)" loading="lazy"></iframe>
         <a class="cover" href="docs/KOLOS_research_paper_RU.pdf" target="_blank" rel="noopener"><img src="images/paper-cover.jpg" alt="Title page of the KOLOS research paper" width="706" height="1000" loading="lazy"></a>
       </div>
-      <div class="paper-info">
-        <div>
+      <div class="paper-side">
+        <div class="card pad">
           <h3>KOLOS: an acoustic probe with machine learning for early detection of insect pests in stored grain</h3>
           <p class="ru">«КОЛОС»: акустический зонд с машинным обучением для раннего обнаружения насекомых-вредителей в хранящемся зерне</p>
-          <ul class="rows" style="margin-top:28px">
+          <ul class="rows">
             <li><span>Author</span><span>Andrey Makarovsky</span></li>
             <li><span>Supervisor</span><span>A. D. Sukhov, Letovo School</span></li>
-            <li><span>Contents</span><span>Problem · design · measurements · ML · economics</span></li>
+            <li><span>Contents</span><span>problem, design, measurements, ML, economics</span></li>
           </ul>
         </div>
         <div class="award">
-          <p class="meta">Recognition · 2026</p>
+          <span class="label">Recognition · 2026</span>
           <p>Laureate of the remote round, All-Russian Timiryazev Contest «AIC: Youth, Science, Innovation». Invited to the national finals in Moscow.</p>
         </div>
         <div class="btns">
-          <a class="pill dark" href="docs/KOLOS_research_paper_RU.pdf" target="_blank" rel="noopener">Open PDF <span class="dot"></span></a>
-          <a class="pill light" style="display:inline-flex" href="docs/KOLOS_research_paper_RU.pdf" download>Download <span class="dot"></span></a>
+          <a class="btn red" href="docs/KOLOS_research_paper_RU.pdf" target="_blank" rel="noopener">Open PDF</a>
+          <a class="btn line" href="docs/KOLOS_research_paper_RU.pdf" download>Download</a>
         </div>
       </div>
     </div>
@@ -427,41 +388,41 @@
 <section id="code">
   <div class="wrap">
     <div class="head">
-      <h2><span class="num">09</span> Code</h2>
-      <p class="meta muted">Python · Arduino (ESP32)</p>
+      <span class="label">09 · Code</span>
+      <h2>Source</h2>
     </div>
-    <div class="links">
-      <a href="code/kolos_ai.py"><b>kolos_ai.py</b><span>Features, Random Forest training, live recognition</span><em>View ↗</em></a>
-      <a href="code/kolos_log.py"><b>kolos_log.py</b><span>Records the probe's serial stream into labelled files</span><em>View ↗</em></a>
-      <a href="code/firmware_v1/firmware_v1.ino"><b>Firmware v1</b><span>Amplitude in 100 ms windows</span><em>View ↗</em></a>
-      <a href="code/firmware_v2/kolos_firmware.ino"><b>Firmware v2</b><span>Calibration, events, Normal / Attention / Alert</span><em>View ↗</em></a>
+    <div class="code">
+      <a href="code/kolos_ai.py"><b>kolos_ai.py</b><span>features, Random Forest training, live recognition</span><em>View ↗</em></a>
+      <a href="code/kolos_log.py"><b>kolos_log.py</b><span>records the probe's serial stream into labelled files</span><em>View ↗</em></a>
+      <a href="code/firmware_v1/firmware_v1.ino"><b>Firmware v1</b><span>amplitude in 100 ms windows</span><em>View ↗</em></a>
+      <a href="code/firmware_v2/kolos_firmware.ino"><b>Firmware v2</b><span>calibration, events, Normal / Attention / Alert</span><em>View ↗</em></a>
+      <a href="https://github.com/andreymakar56/kolos" target="_blank" rel="noopener"><b>GitHub</b><span>all project files</span><em>Open ↗</em></a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <p class="meta">Andrey Makarovsky · Letovo School, Moscow · 2026</p>
-    <a class="meta" href="#top" style="text-decoration:none">Back to top ↑</a>
+    <span>Andrey Makarovsky · Letovo School, Moscow · 2026</span>
+    <a href="#top" style="text-decoration:none">Back to top ↑</a>
   </div>
 </footer>
 
 <script>
-  const full = ["Silence", "Knocks", "Impulses", "Noise"];
+  const names = ["Silence", "Knocks", "Impulses", "Noise"];
   const m = [[55,0,0,13],[0,32,1,1],[0,0,106,0],[4,0,0,74]];
-  const cm = document.getElementById("cm");
-  let html = "<div></div>" + full.map(s => `<div class="h">${s}</div>`).join("");
+  let html = "<div></div>" + names.map(s => `<div class="h">${s}</div>`).join("");
   m.forEach((row, i) => {
     const total = row.reduce((a, b) => a + b, 0);
-    html += `<div class="r">${full[i]}</div>`;
+    html += `<div class="r">${names[i]}</div>`;
     row.forEach((v, j) => {
       const s = v / total;
-      const bg = v === 0 ? "#f3f3f7" : i === j ? `rgba(79,109,245,${0.3 + 0.7 * s})` : `rgba(36,36,44,${0.12 + 0.5 * s})`;
-      const fg = v === 0 ? "#b8b8c4" : (i === j && s > 0.5) ? "#fff" : "#111114";
+      const bg = v === 0 ? "#f4f4f1" : i === j ? `rgba(225,29,60,${0.25 + 0.75 * s})` : `rgba(20,20,20,${0.08 + 0.4 * s})`;
+      const fg = v === 0 ? "#bdbdb7" : (i === j && s > 0.5) ? "#fff" : "#141414";
       html += `<div style="background:${bg};color:${fg}">${v}</div>`;
     });
   });
-  cm.innerHTML = html;
+  document.getElementById("cm").innerHTML = html;
 </script>
 </body>
 </html>
