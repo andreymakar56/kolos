@@ -29,4 +29,4 @@ python3 code/kolos_ai.py live PORT      # live recognition from the board
 
 93.4% accuracy on held-out data (4 classes: silence, single knocks, repeated impulses, airborne noise).
 
-Author: Andrey Makarovsky, Letovo School, Moscow.
+Authors: Andrey Makarovsky, Vladimir Nazarov, Amir Safin. Letovo School, Moscow.
